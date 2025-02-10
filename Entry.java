@@ -10,6 +10,8 @@ public class Entry{
             Debug.flags.add("input");
             Debug.flags.add("isVailedList");
             Debug.flags.add("ss");
+            Debug.flags.add("toSexpression");
+            Debug.flags.add("format");
             // Debug.p("hello", "title", "body");
             Scanner sc = new Scanner(System.in);
             if(System.in.available() != 0){
@@ -23,7 +25,11 @@ public class Entry{
                     if(t == "") break;
 
                     String ft = Lisp.format(t);
-                    Debug.p("isVailedList", "isVailedList", Lisp.isVailedList(ft).toString());
+                    Debug.p("isVailedList", "format", ft);
+                    // Debug.p("isVailedList", "isVailedList", Lisp.isVailedList(ft).toString());
+                    // if(!Lisp.isVailedList(ft)) continue;
+
+                    // Debug.p("toSexpression", "toSexpression", Lisp.toSexpression(ft).toString());
                 }
             }
         } catch (Exception e){

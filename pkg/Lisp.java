@@ -4,13 +4,44 @@ import java.io.*;
 
 public class Lisp {
     public static String format(String s){
-        return s
-        .replaceAll("\\(", " ( ")
-        .replaceAll("\\)", " ) ")
+        String ss;
+        // convert to one line
+        ss = s
         .replaceAll("\n", " ")
         .replaceAll("\t", " ")
+        .replaceAll("\\(", " ( ")
+        .replaceAll("\\)", " ) ")
         .replaceAll(" {2,}", " ")
         .trim();
+
+        // convert ( ) to NIL
+        ss = ss
+        .replaceAll("\\( \\)", " NIL ")
+        .replaceAll(" {2,}", " ");
+
+        // add NIL to end of list
+        ss = ss.replaceAll("\\)", "NIL )");
+        Debug.p("format", "replaceAll(\"\\)\")", ss);
+
+        // // triming NIL
+        // ss = ss.replaceAll("( NIL){2,}", " NIL");
+        String sst;
+        while(true){
+            sst = ss
+            .replaceAll("( NIL){2,}", " NIL")
+            .replaceAll("\\( NIL \\)", " NIL ")
+            .replaceAll(" {2,}", " ")
+            .trim();
+
+            if(ss.equals(sst)){
+                break;
+            }else{
+                ss = sst;
+                Debug.p("format", "trim", ss);
+            }
+        }
+
+        return ss;
     }
     public static Boolean isVailedList(String s){
         // 括弧で開始し括弧で終了 (list) か要素数 1 (atom)
@@ -32,7 +63,18 @@ public class Lisp {
         Debug.p("isVailedList", "open-prth", prth);
         return prth == 0;
     }
-    static String toSExpression(String s){
-        return "";
-    }
+
+    // public static ArrayList<String> toSexpression(String[] ss, int i){
+    //     if(ss[i].equals("(")){
+    //         ArrayList<String> se = new ArrayList<String>();
+    //         se.add(toSexpression(ss, i + 1));
+            
+    //     }
+    //     if(ss[i].equals(")")){
+
+    //     }
+    //     if(ss[i].equals("NIL")){
+    //         return "NIL";
+    //     }
+    // }
 }
