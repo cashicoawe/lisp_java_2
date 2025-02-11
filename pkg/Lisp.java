@@ -9,7 +9,7 @@ public class Lisp {
         ss = s
         .replaceAll("\n", " ")
         .replaceAll("\t", " ")
-        .replaceAll("\\(", " ( ")
+        .replaceAll("\\z(", " ( ")
         .replaceAll("\\)", " ) ")
         .replaceAll(" {2,}", " ")
         .trim();
@@ -23,8 +23,8 @@ public class Lisp {
         ss = ss.replaceAll("\\)", "NIL )");
         Debug.p("format", "replaceAll(\"\\)\")", ss);
 
-        // // triming NIL
-        // ss = ss.replaceAll("( NIL){2,}", " NIL");
+        // triming NIL
+        // 終端を NIL にすることで、cdr の終端がリストか NIL になる
         String sst;
         while(true){
             sst = ss
@@ -64,17 +64,19 @@ public class Lisp {
         return prth == 0;
     }
 
-    // public static ArrayList<String> toSexpression(String[] ss, int i){
-    //     if(ss[i].equals("(")){
-    //         ArrayList<String> se = new ArrayList<String>();
-    //         se.add(toSexpression(ss, i + 1));
-            
-    //     }
-    //     if(ss[i].equals(")")){
+    public static int findEdge(String[] ss, int i){
+        if(ss[i].equals("(")){
+            int prth = 0;
+            for(int j = i; j < ss.length; j++){
+                if (ss[j].equals("(")) prth = prth + 1;
+                if (ss[j].equals(")")) prth = prth - 1;
+                if(prth == 0){
+                    return j;
+                }
+            }
+        }
+        return i;
+    }
 
-    //     }
-    //     if(ss[i].equals("NIL")){
-    //         return "NIL";
-    //     }
-    // }
+    
 }

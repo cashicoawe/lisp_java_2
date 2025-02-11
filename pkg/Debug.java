@@ -8,7 +8,7 @@ public class Debug {
 
     public static void p(String flag, String title, Object body){
         if(on && flags.contains(flag)){
-            System.out.println("\n" + title + "[\n" + body + "\n]");
+            System.out.println("\n" + flag + "/" +  title + "[\n" + body + "\n]");
         }
     }
 }
